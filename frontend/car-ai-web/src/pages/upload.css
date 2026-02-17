@@ -81,3 +81,7 @@ button:hover {
   max-height: 300px;
   overflow-y: auto;
 }
+
+.page {
+  color: #000;   /* forces text to be visible */
+}
