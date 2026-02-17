@@ -6,12 +6,30 @@ import "./result.css";
 export default function Result() {
   const { id } = useParams();
   const [analysis, setAnalysis] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     axios.post(`https://car-contract-ai.onrender.com/analyze/${id}`)
-      .then(res => setAnalysis(res.data))
-      .catch(err => console.error(err));
+      .then(res => {
+        console.log("API RESPONSE:", res.data); // helpful for debugging
+        setAnalysis(res.data);
+      })
+      .catch(err => {
+        console.error(err);
+        setError("Failed to load analysis.");
+      });
   }, [id]);
+
+  // Error state
+  if (error) {
+    return (
+      <div className="page">
+        <div className="result-container">
+          <h2 className="title">{error}</h2>
+        </div>
+      </div>
+    );
+  }
 
   // Loading state
   if (!analysis) {
@@ -35,11 +53,15 @@ export default function Result() {
           {/* Summary */}
           <h3>Contract Summary</h3>
           <hr />
-          {analysis.summary && Object.entries(analysis.summary).map(([key, value]) => (
-            <p key={key}>
-              <strong>{key.replace(/_/g, " ")}:</strong> {value || "Not found"}
-            </p>
-          ))}
+          {analysis.summary && Object.keys(analysis.summary).length > 0 ? (
+            Object.entries(analysis.summary).map(([key, value]) => (
+              <p key={key}>
+                <strong>{key.replace(/_/g, " ")}:</strong> {value || "Not found"}
+              </p>
+            ))
+          ) : (
+            <p>No summary data available</p>
+          )}
 
           {/* Risks */}
           <h3>Risks Detected</h3>
@@ -53,7 +75,7 @@ export default function Result() {
           )}
 
           {/* Fairness Score */}
-          {analysis.fairness_score && (
+          {analysis.fairness_score !== undefined && (
             <>
               <h3>Fairness Score</h3>
               <hr />
@@ -69,20 +91,20 @@ export default function Result() {
 
               <strong>Unfair Clauses:</strong>
               <ul>
-                {analysis.tips?.unfair_clauses?.map((tip, i) => (
+                {(analysis.tips.unfair_clauses || []).map((tip, i) => (
                   <li key={i}>{tip}</li>
                 ))}
               </ul>
 
               <strong>Negotiation Points:</strong>
               <ul>
-                {analysis.tips?.negotiation_points?.map((tip, i) => (
+                {(analysis.tips.negotiation_points || []).map((tip, i) => (
                   <li key={i}>{tip}</li>
                 ))}
               </ul>
 
               <strong>Suggested Message:</strong>
-              <p>{analysis.tips.message_to_dealer}</p>
+              <p>{analysis.tips.message_to_dealer || "No suggestion available"}</p>
             </>
           )}
 
