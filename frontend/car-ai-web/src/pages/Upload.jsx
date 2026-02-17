@@ -1,11 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
-import "./upload.css";
 import { useNavigate } from "react-router-dom";
+import "./upload.css";
 
 export default function Upload() {
   const [file, setFile] = useState(null);
   const [result, setResult] = useState("");
+
+  const navigate = useNavigate();   // <-- move here
 
   const handleUpload = async () => {
     if (!file) return;
@@ -14,21 +16,15 @@ export default function Upload() {
     formData.append("file", file);
 
     try {
-      // Upload file
       const uploadRes = await axios.post(
-        "https://car-contract-ai.onrender.com/upload"
-,
+        "https://car-contract-ai.onrender.com/upload",
         formData
       );
 
       const contractId = uploadRes.data.contract_id;
 
-      // Redirect to result page
-      
-
-      const navigate = useNavigate();
-       navigate(`/result/${contractId}`);
-
+      // Navigate to result page
+      navigate(`/result/${contractId}`);
 
     } catch (err) {
       setResult("Error occurred while processing file.");
