@@ -1,0 +1,83 @@
+/* Reset */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #eef3f7, #dfe9f3);
+}
+
+/* Page container */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 60px;
+}
+
+/* Title */
+.title {
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #2c3e50;
+  text-align: center;
+}
+
+/* Layout for cards */
+.layout {
+  width: 100%;
+  max-width: 1000px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+/* Card style */
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  border-left: 6px solid #2f80ed;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* Input styling */
+input[type="file"] {
+  width: 100%;
+  margin: 15px 0;
+}
+
+/* Button */
+button {
+  width: 100%;
+  padding: 12px;
+  background: #2f80ed;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1c60c7;
+}
+
+/* Result text */
+.result {
+  margin-top: 15px;
+  color: #27ae60;
+  font-weight: bold;
+}
+
+/* Analysis text box */
+.analysis pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  background: #f7f9fc;
+  padding: 15px;
+  border-radius: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+}
