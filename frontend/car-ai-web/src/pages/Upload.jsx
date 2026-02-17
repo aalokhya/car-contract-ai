@@ -7,7 +7,7 @@ export default function Upload() {
   const [file, setFile] = useState(null);
   const [result, setResult] = useState("");
 
-  const navigate = useNavigate();   // must be here
+  const navigate = useNavigate();
 
   const handleUpload = async () => {
     if (!file) return;
@@ -23,11 +23,16 @@ export default function Upload() {
 
       const contractId = uploadRes.data.contract_id;
 
-      navigate(`/result/${contractId}`);   // navigation here
+      // Navigate safely
+      if (contractId) {
+        navigate(`/result/${contractId}`);
+      } else {
+        setResult("Upload succeeded but contract ID missing.");
+      }
 
     } catch (err) {
-      setResult("Error occurred while processing file.");
       console.error(err);
+      setResult("Error occurred while processing file.");
     }
   };
 
@@ -48,17 +53,6 @@ export default function Upload() {
         </button>
 
         {result && <p className="result">{result}</p>}
-
-        const uploadRes = await axios.post(
-        "https://car-contract-ai.onrender.com/upload",
-  formData
-);
-
-console.log(uploadRes.data);   // add this line
-
-const contractId = uploadRes.data.contract_id;
-navigate(`/result/${contractId}`);
-
       </div>
     </div>
   );
