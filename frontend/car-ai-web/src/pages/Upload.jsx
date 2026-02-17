@@ -15,7 +15,8 @@ export default function Upload() {
     try {
       // Upload file
       const uploadRes = await axios.post(
-        "http://127.0.0.1:8000/upload",
+        "https://car-contract-ai.onrender.com/upload"
+,
         formData
       );
 

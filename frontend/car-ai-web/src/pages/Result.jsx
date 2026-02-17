@@ -8,7 +8,8 @@ export default function Result() {
   const [analysis, setAnalysis] = useState(null);
 
   useEffect(() => {
-    axios.post(`http://127.0.0.1:8000/analyze/${id}`)
+    axios.post(`https://car-contract-ai.onrender.com/analyze/${id}`)
+
       .then(res => setAnalysis(res.data))
       .catch(err => console.error(err));
   }, [id]);
@@ -90,7 +91,8 @@ export default function Result() {
 {/* Download Button */}
 <button
   onClick={() =>
-    window.open(`http://127.0.0.1:8000/download/${id}`)
+    window.open(`https://car-contract-ai.onrender.com/download/${id}`)
+
   }
 >
   Download Report
