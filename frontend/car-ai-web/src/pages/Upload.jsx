@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import "./upload.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Upload() {
   const [file, setFile] = useState(null);
@@ -23,7 +24,11 @@ export default function Upload() {
       const contractId = uploadRes.data.contract_id;
 
       // Redirect to result page
-      window.location.href = `/result/${contractId}`;
+      
+
+      const navigate = useNavigate();
+       navigate(`/result/${contractId}`);
+
 
     } catch (err) {
       setResult("Error occurred while processing file.");
