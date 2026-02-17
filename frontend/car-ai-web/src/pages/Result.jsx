@@ -9,7 +9,6 @@ export default function Result() {
 
   useEffect(() => {
     axios.post(`https://car-contract-ai.onrender.com/analyze/${id}`)
-
       .then(res => setAnalysis(res.data))
       .catch(err => console.error(err));
   }, [id]);
@@ -31,17 +30,16 @@ export default function Result() {
 
         <h1 className="title">Contract Analysis</h1>
 
-        <div className="card">
+        <div className="result-card">
 
           {/* Summary */}
           <h3>Contract Summary</h3>
           <hr />
-          {analysis.summary &&
-            Object.entries(analysis.summary).map(([key, value]) => (
-              <p key={key}>
-                <strong>{key.replace(/_/g, " ")}:</strong> {value}
-              </p>
-            ))}
+          {analysis.summary && Object.entries(analysis.summary).map(([key, value]) => (
+            <p key={key}>
+              <strong>{key.replace(/_/g, " ")}:</strong> {value || "Not found"}
+            </p>
+          ))}
 
           {/* Risks */}
           <h3>Risks Detected</h3>
@@ -63,41 +61,41 @@ export default function Result() {
             </>
           )}
 
-         {/* Negotiation Tips */}
-{analysis.tips && (
-  <>
-    <h3>Negotiation Tips</h3>
-    <hr />
+          {/* Negotiation Tips */}
+          {analysis.tips && (
+            <>
+              <h3>Negotiation Tips</h3>
+              <hr />
 
-    <strong>Unfair Clauses:</strong>
-    <ul>
-      {analysis.tips.unfair_clauses.map((tip, i) => (
-        <li key={i}>{tip}</li>
-      ))}
-    </ul>
+              <strong>Unfair Clauses:</strong>
+              <ul>
+                {analysis.tips?.unfair_clauses?.map((tip, i) => (
+                  <li key={i}>{tip}</li>
+                ))}
+              </ul>
 
-    <strong>Negotiation Points:</strong>
-    <ul>
-      {analysis.tips.negotiation_points.map((tip, i) => (
-        <li key={i}>{tip}</li>
-      ))}
-    </ul>
+              <strong>Negotiation Points:</strong>
+              <ul>
+                {analysis.tips?.negotiation_points?.map((tip, i) => (
+                  <li key={i}>{tip}</li>
+                ))}
+              </ul>
 
-    <strong>Suggested Message:</strong>
-    <p>{analysis.tips.message_to_dealer}</p>
-  </>
-)}
+              <strong>Suggested Message:</strong>
+              <p>{analysis.tips.message_to_dealer}</p>
+            </>
+          )}
 
-{/* Download Button */}
-<button
-  onClick={() =>
-    window.open(`https://car-contract-ai.onrender.com/download/${id}`)
+          {/* Download Button */}
+          <button
+            onClick={() =>
+              window.open(`https://car-contract-ai.onrender.com/download/${id}`)
+            }
+          >
+            Download Report
+          </button>
 
-  }
->
-  Download Report
-</button>
-        </div>    
+        </div>
       </div>
     </div>
   );
